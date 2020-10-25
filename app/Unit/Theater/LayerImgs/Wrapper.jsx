@@ -20,6 +20,19 @@ import {
   domain
 } from '../../../../config/services.js';
 
+const preloadWidgetScript = () => {
+/*
+for pinterest embeded,
+ref: https://stackoverflow.com/questions/54255014/embed-pinterest-widget-in-react
+ref: https://github.com/pinterest/widgets/issues/13
+*/
+  const script = document.createElement('script');
+  script.async = true;
+  script.dataset.pinBuild = 'doBuild';
+  script.src = '//assets.pinterest.com/js/pinit.js';
+  document.body.appendChild(script);
+}
+
 class Wrapper extends React.Component {
   constructor(props){
     super(props);
@@ -43,6 +56,18 @@ class Wrapper extends React.Component {
     //this.props._refer_toandclose('user', this.props.unitCurrent.authorBasic.authorId);
   }
 
+  componentDidMount() {
+    if (!window.doBuild) {
+      /*
+      for pinterest embeded,
+      ref: https://stackoverflow.com/questions/54255014/embed-pinterest-widget-in-react
+      ref: https://github.com/pinterest/widgets/issues/13
+       */
+      preloadWidgetScript();
+    } else {
+      window.doBuild();
+    }
+  }
 
   render(){
     let nodesTitleObj = this.props.unitCurrent.nouns;

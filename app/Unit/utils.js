@@ -50,11 +50,13 @@ export function _axios_getUnitImgs(cancelToken, unitId){ // currently used in an
       srcBeneath? _axios_getUnitImg_base64(cancelToken, srcBeneath) : Promise.resolve({data: null})
     ]).then(
       axios.spread((resImgCover, resImgBeneath)=>{
-        let imgsBase64 = {
-          cover: resImgCover.data,
-          beneath: resImgBeneath.data
+        let imgObj = {
+          base64Cover: resImgCover.data,
+          base64Beneath: resImgBeneath.data,
+          pathImgCover: srcCover, // because the 'src' was used to mean 'base64' in other files, the name here 'pass by' the word
+          pathImgBeneath: srcBeneath
         }
-        return imgsBase64;
+        return imgObj;
       })
     )
   }).catch(function (thrown) {

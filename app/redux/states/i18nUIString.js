@@ -141,7 +141,7 @@ const i18nUIString_EN = {
   "guidingCreateShare_NodesView": "Assign to Corners by one or several methods of below:",
   "guidingCreateShare_NodesView_selectHint": "No selection yet.",
   "subTitle_CreateShare_AssignTypes": ["Your Homeland", "Your Residence", "or, search one"],
-  "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to contribute.",
+  "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to assign.",
   "message_Unit_Editing_AssignNotAllowed": "We're sorry. Your contribution Can't be changed once released since it's linked either to the markup or location.", //Original:"the corner linked to could Not be changed after first release."
   "message_Unit_EraseConfirm": ["No one can see this Share after erase, including you. ", "Are you sure you want to erase this Share?"], //Original:"No one would see this Shared after erase, including you. ", "Are you sure your going to erase this Shared?"
   "message_Unit_EraseRes": ["This Share has beed erased successfully."],//Changed "Shared" to "Share"

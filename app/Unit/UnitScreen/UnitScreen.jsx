@@ -85,7 +85,7 @@ class UnitScreen extends React.Component {
       new Promise((resolve, reject)=>{_axios_getUnitImgs(this.axiosSource.token, this.unitId).then((result)=>{resolve(result);});})
     ];
     Promise.all(promiseArr)
-    .then(([unitRes, imgsBase64])=>{
+    .then(([unitRes, imgObj])=>{
       self.setState({axios: false});
       let resObj = JSON.parse(unitRes.data);
       //we compose the marksset here, but sould consider done @ server
@@ -116,7 +116,8 @@ class UnitScreen extends React.Component {
         unitId:self.unitId,
         identity: resObj.main.identity,
         authorBasic: resObj.main.authorBasic,
-        coverSrc: imgsBase64.cover,
+        coverSrc: imgObj.base64Cover,
+        coverPath: imgObj.pathImgCover,
         primerify: resObj.main.primerify,
         /*
         'beneath' was currently not used,
@@ -124,7 +125,8 @@ class UnitScreen extends React.Component {
         the best and simplest way is just rm the beneathSrc, like below,
         because all the 'check' for beneathify always ask the bool of this param.
         */
-        //beneathSrc: imgsBase64.beneath,
+        //beneathSrc: imgObj.base64Beneath,
+        //beneathPath: imgObj.pathImgBeneath,
         coverMarksList:coverMarks.list,
         coverMarksData:coverMarks.data,
         beneathMarksList:beneathMarks.list,

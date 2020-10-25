@@ -16,6 +16,9 @@ import ImgPreview from '../../../Components/ImgPreview.jsx';
 import LinkCopy from '../../../Components/LinkCopy/LinkCopy.jsx';
 import AccountPalette from '../../../Components/AccountPalette.jsx';
 import DateConverter from '../../../Components/DateConverter.jsx';
+import {
+  domain
+} from '../../../../config/services.js';
 
 class Wrapper extends React.Component {
   constructor(props){
@@ -86,11 +89,6 @@ class Wrapper extends React.Component {
           className={classnames(styles.boxContentWidth, styles.boxBottom)}>
           <div
             className={classnames(styles.boxBottomRight)}>
-            <div
-              className={classnames(styles.btnBottomIcon)}
-              style={{marginTop: '2px'}}>
-              <LinkCopy {...this.props}/>
-            </div>
             {
               (this.props.unitCurrent.identity != "author") &&
               <div
@@ -98,6 +96,19 @@ class Wrapper extends React.Component {
                 <Inspired/>
               </div>
             }
+            <div
+              className={classnames(styles.btnBottomIcon)}
+              style={{marginTop: '2px'}}>
+              <LinkCopy {...this.props}/>
+            </div>
+            <div
+              className={classnames(styles.btnBottomIcon)}>
+              <a
+                style={{ display: 'block', width: '100%', height: '100%' }}
+                data-pin-do="buttonPin"
+                href={"https://www.pinterest.com/pin/create/button/?url=https://" + domain.name + '/cosmic/explore/unit?unitId=' + this.props.unitCurrent.unitId + '&unitView=theater&media=https://' + domain.name + '/router/img/' + this.props.unitCurrent.coverPath + '?type=unitSingle'}
+                data-pin-shape="round"></a>
+            </div>
             <div style={{borderRight: 'solid 0.75px #a3a3a3', margin: '0 1.5rem', height: '3.6rem'}}/>
             <div>
               {

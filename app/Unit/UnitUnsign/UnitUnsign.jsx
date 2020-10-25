@@ -71,7 +71,7 @@ class UnitUnsign extends React.Component {
       new Promise((resolve, reject)=>{_axios_getUnitImgs(this.axiosSource.token, this.unitId).then((result)=>{resolve(result);});})
     ];
     Promise.all(promiseArr)
-    .then(([unitRes, imgsBase64])=>{
+    .then(([unitRes, imgObj])=>{
       self.setState({axios: false});
       let resObj = JSON.parse(unitRes.data);
       //we compose the marksset here, but sould consider done @ server
@@ -102,8 +102,10 @@ class UnitUnsign extends React.Component {
         unitId:self.unitId,
         identity: resObj.main.identity,
         authorBasic: resObj.main.authorBasic,
-        coverSrc: imgsBase64.cover,
-        beneathSrc: imgsBase64.beneath,
+        coverSrc: imgObj.base64Cover,
+        coverPath: imgObj.pathImgCover,
+        beneathSrc: imgObj.base64Beneath,
+        //beneathPath: imgObj.pathImgBeneath,
         coverMarksList:coverMarks.list,
         coverMarksData:coverMarks.data,
         beneathMarksList:beneathMarks.list,

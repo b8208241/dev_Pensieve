@@ -5,14 +5,17 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const _DB_units = require('../../db/models/index').units;
 const _DB_inspireds = require('../../db/models/index').inspireds;
+const _DB_notiRealTime = require('../../db/models/index').notifications_realtime;
 
 const {_res_success} = require('../utils/resHandler.js');
 const {
   _handle_ErrCatched,
   forbbidenError,
   internalError,
-  validationError
+  validationError,
+  authorizedError
 } = require('../utils/reserrHandler.js');
+const { unstable_renderSubtreeIntoContainer } = require('react-dom');
 
 async function _handle_GET_inspired_byUnit(req, res){
   const userId = req.extra.tokenUserId;
@@ -92,6 +95,47 @@ async function _handle_POST_inspired_byUnit(req, res){
     };
 
     _res_success(res, sendingData, "POST: /inspired plain, complete.");
+    // after res to client, handle with the notifications process
+    let notiRealtimeRecord = await _DB_notiRealTime.findOne({
+      where: {
+        id_receiver: authorId,
+        id_unit: unitId,
+        event_type: 'inspired',
+        displayed: false
+      }
+    });
+    if (!!notiRealtimeRecord){ // has matched record, update to the one.
+      let textParamsStr = notiRealtimeRecord.type_textparams;
+      let textParamsArr = textParamsStr.split(',').map(Number); // .split() would res items in 'string', so use map(Number) to then return in number
+      let newTextParamsArr = textParamsArr[0] + 1;
+      let newTextParamsStr = "";
+      for (let i = 0; i < newTextParamsArr.length; i++){
+        if (i > 0) newTextParamsStr += ",";
+        newTextParamsStr += newTextParamsArr[i] ;
+      };
+      await notiRealtimeRecord.update(
+        {
+          type_textparams: newTextParamsStr
+        },
+        { where: { 
+          id_receiver: authorId,
+          id_unit: unitId,
+          event_type: 'inspired',
+          displayed: false
+        } }
+      );
+    }
+    else { // no record before
+      let newTextParamsStr = "1";
+      notiRealtimeRecord.create({
+        id_receiver: authorId,
+        id_unit: unitId,
+        event_type: 'inspired',
+        type_textparams: newTextParamsStr,
+        displayed: false
+      });
+    };
+    // end of notifications process
   }
   catch(error){
     _handle_ErrCatched(error, req, res);

@@ -13,6 +13,7 @@ const nounsRouter = require('./nouns/main.js');
 const visitRouter = require('./visit/main.js');
 const shareRouter = require('./share/main.js');
 const inspireRouter = require('./inspired/main.js');
+const notiRouter = require('./notifications/main.js');
 const uFeedRouter = require('./user/feed/main.js');
 const uNodeFilterRouter = require('./user/nodeFilter/main.js');
 const uProfileRouter = require('./user/profile/main.js');
@@ -39,6 +40,7 @@ router.use('/nodefilter', uNodeFilterRouter)
 router.use('/visit', visitRouter)
 router.use('/share', shareRouter)
 router.use('/inspired', inspireRouter)
+router.use('/notifications', notiRouter)
 
 
 
